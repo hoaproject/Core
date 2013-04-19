@@ -130,12 +130,7 @@ class Parameter {
             $owner = get_class($owner);
         }
         else {
-
-            $reflection = new \ReflectionClass($owner);
-
-            if(false === $reflection->implementsInterface(
-                            '\Hoa\Core\Parameter\Parameterizable'
-                         ))
+            if (false === class_implements($owner, '\Hoa\Core\Parameter\Parameterizable'))
                 throw new \Hoa\Core\Exception(
                     'Only parameterizable object can have parameter; ' .
                     '%s does implement \Hoa\Core\Parameter\Parameterizable.',
@@ -391,7 +386,7 @@ class Parameter {
         }
 
         return $out;
-    } 
+    }
 
     /**
      * Set keywords.
