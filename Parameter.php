@@ -130,7 +130,7 @@ class Parameter {
             $owner = get_class($owner);
         }
         else {
-            if (false === class_implements($owner, '\Hoa\Core\Parameter\Parameterizable'))
+            if (!in_array('\Hoa\Core\Parameter\Parameterizable', class_implements($owner))
                 throw new \Hoa\Core\Exception(
                     'Only parameterizable object can have parameter; ' .
                     '%s does implement \Hoa\Core\Parameter\Parameterizable.',
