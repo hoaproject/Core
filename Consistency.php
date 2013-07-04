@@ -296,8 +296,9 @@ class Consistency implements \ArrayAccess {
 
             if(WITH_COMPOSER) {
 
-                $explode[0] = strtolower($explode[0]);
-                $explode[1] = strtolower($explode[1]);
+                $libraryName = $explode[1];
+                $explode[0]  = strtolower($explode[0]);
+                $explode[1]  = strtolower($explode[1]);
             }
 
             $backup     = $explode[0];
@@ -317,11 +318,19 @@ class Consistency implements \ArrayAccess {
 
             foreach($glob as $value) {
 
-                $out = $this->_import(
-                    substr(
+                if (WITH_COMPOSER) {
+                    $class    = explode('/', substr(substr($value, 0, -4), $countFrom));
+                    $class[0] = $libraryName;
+                    $class    = implode('.', $class);
+                } else {
+                    $class = substr(
                         str_replace('/', '.', substr($value, 0, -4)),
                         $countFrom
-                    ),
+                    );
+                }
+
+                $out = $this->_import(
+                    $class,
                     $load,
                     $from,
                     $root,
