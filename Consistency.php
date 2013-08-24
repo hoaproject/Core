@@ -189,6 +189,9 @@ class Consistency {
             }
 
         if(false === $out) {
+            if ('Hoa' !== $family) {
+                return $this;
+            }
 
             if(true === $load) {
 
@@ -366,12 +369,12 @@ class Consistency {
             $parts = $explode;
 
         $count  = count($parts);
-        $backup = array($parts[0], $parts[1]);
+        $backup = array($parts[0], ($count > 1) ? $parts[1] : null);
 
         if(WITH_COMPOSER) {
 
             $parts[0] = strtolower($parts[0]);
-            $parts[1] = strtolower($parts[1]);
+            $parts[1] = isset($parts[1]) ? strtolower($parts[1]) : null;
         }
 
         $parts[0] = $root . $parts[0];
