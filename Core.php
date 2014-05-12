@@ -278,6 +278,20 @@ class Core implements Parameter\Parameterizable {
     }
 
     /**
+     * Set roots of main protocols.
+     *
+     * @access  public
+     * @param   array  $roots   Roots (e.g. ['data' => '/path/to/Data']).
+     * @return  void
+     */
+    public function setRoots( Array $roots ) {
+        foreach ($roots as $name => $path)
+            $this->_parameters->setParameter('root.' . $name, $path);
+
+        $this->setProtocol();
+    }
+
+    /**
      * Set protocol according to the current parameter.
      *
      * @access  public
