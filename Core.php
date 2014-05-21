@@ -135,6 +135,7 @@ class Core implements Parameter\Parameterizable {
      */
     private function __construct ( ) {
 
+        static::_define('HOA_CREATOR',   __FILE__);
         static::_define('SUCCEED',       true);
         static::_define('FAILED',        false);
         static::_define('…',             '__hoa_core_fill');
@@ -519,6 +520,7 @@ function event ( $eventId ) {
 /**
  * Then, initialize Hoa.
  */
-\Hoa\Core::getInstance()->initialize();
+if (!defined('HOA_CREATOR'))
+    \Hoa\Core::getInstance()->initialize();
 
 }
