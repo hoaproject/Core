@@ -543,29 +543,29 @@ class Consistency {
 
         static $_list = array(
             // PHP keywords.
-            '__halt_compiler', 'abstract',     'and',           'array',
-            'as',              'break',        'callable',      'case',
-            'catch',           'class',        'clone',         'const',
-            'continue',        'declare',      'default',       'die',
-            'do',              'echo',         'else',          'elseif',
-            'empty',           'enddeclare',   'endfor',        'endforeach',
-            'endif',           'endswitch',    'endwhile',      'eval',
-            'exit',            'extends',      'final',         'for',
-            'foreach',         'function',     'global',        'goto',
-            'if',              'implements',   'include',       'include_once',
-            'instanceof',      'insteadof',    'interface',     'isset',
-            'list',            'namespace',    'new',           'or',
-            'print',           'private',      'protected',     'public',
-            'require',         'require_once', 'return',        'static',
-            'switch',          'throw',        'trait',         'try',
-            'unset',           'use',          'var',           'while',
-            'xor',             'yield',
+            '__halt_compiler'   => 1, 'abstract'        => 1, 'and'             => 1, 'array'           => 1,
+            'as'                => 1, 'break'           => 1, 'callable'        => 1, 'case'            => 1,
+            'catch'             => 1, 'class'           => 1, 'clone'           => 1, 'const'           => 1,
+            'continue'          => 1, 'declare'         => 1, 'default'         => 1, 'die'             => 1,
+            'do'                => 1, 'echo'            => 1, 'else'            => 1, 'elseif'          => 1,
+            'empty'             => 1, 'enddeclare'      => 1, 'endfor'          => 1, 'endforeach'      => 1,
+            'endif'             => 1, 'endswitch'       => 1, 'endwhile'        => 1, 'eval'            => 1,
+            'exit'              => 1, 'extends'         => 1, 'final'           => 1, 'for'             => 1,
+            'foreach'           => 1, 'function'        => 1, 'global'          => 1, 'goto'            => 1,
+            'if'                => 1, 'implements'      => 1, 'include'         => 1, 'include_once'    => 1,
+            'instanceof'        => 1, 'insteadof'       => 1, 'interface'       => 1, 'isset'           => 1,
+            'list'              => 1, 'namespace'       => 1, 'new'             => 1, 'or'              => 1,
+            'print'             => 1, 'private'         => 1, 'protected'       => 1, 'public'          => 1,
+            'require'           => 1, 'require_once'    => 1, 'return'          => 1, 'static'          => 1,
+            'switch'            => 1, 'throw'           => 1, 'trait'           => 1, 'try'             => 1,
+            'unset'             => 1, 'use'             => 1, 'var'             => 1, 'while'           => 1,
+            'xor'               => 1, 'yield',
             // Compile-time constants.
-            '__class__',       '__dir__',      '__file__',      '__function__',
-            '__line__',        '__method__',   '__namespace__', '__trait__'
+            '__class__'         => 1, '__dir__'         => 1, '__file__'        => 1, '__function__'    => 1,
+            '__line__'          => 1, '__method__'      => 1, '__namespace__'   => 1, '__trait__'       => 1
         );
 
-        return in_array(strtolower($word), $_list);
+        return isset($_list[strtolower($word)]);
     }
 
     /**
