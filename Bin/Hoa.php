@@ -71,7 +71,7 @@ try {
     $router = new \Hoa\Router\Cli();
     $router->get(
         'g',
-        '(?:(?<vendor>\w+)\s+)?(?<library>\w+)?(?::(?<command>\w+))?(?<_tail>.*?)',
+        '(?:(?<vendor>\w+)\s+)?(?<library>\w+)?(?::(?<command>[\w\-]+))?(?<_tail>.*?)',
         'main',
         'main',
         array(
@@ -83,7 +83,7 @@ try {
 
     $dispatcher = new \Hoa\Dispatcher\Basic(array(
         'synchronous.controller'
-            => '(:%variables.vendor:lU:)\(:%variables.library:lU:)\Bin\(:%variables.command:lU:)',
+            => '(:%variables.vendor:lU:)\(:%variables.library:lU:)\Bin\(:%variables.command:lUs/-//:)',
         'synchronous.action'
             => 'main'
     ));
