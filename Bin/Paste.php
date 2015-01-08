@@ -55,6 +55,7 @@ class Paste extends \Hoa\Console\Dispatcher\Kit {
      */
     protected $options = array(
         array('address', \Hoa\Console\GetOption::REQUIRED_ARGUMENT, 'a'),
+        array('title',   \Hoa\Console\GetOption::REQUIRED_ARGUMENT, 't'),
         array('help',    \Hoa\Console\GetOption::NO_ARGUMENT,       'h'),
         array('help',    \Hoa\Console\GetOption::NO_ARGUMENT,       '?')
     );
@@ -70,11 +71,16 @@ class Paste extends \Hoa\Console\Dispatcher\Kit {
     public function main ( ) {
 
         $address = 'paste.hoa-project.net:80';
+        $title   = 'Untitled';
 
         while(false !== $c = $this->getOption($v)) switch($c) {
 
             case 'a':
                 $address = $v;
+              break;
+            
+            case 't':
+                $title = $v;
               break;
 
             case 'h':
@@ -86,16 +92,21 @@ class Paste extends \Hoa\Console\Dispatcher\Kit {
                 $this->resolveOptionAmbiguity($v);
               break;
         }
-
         $input   = file_get_contents('php://stdin');
+        $input   = http_build_query(array(
+            'title' => $title,
+            'content' => $input
+            ));
+
+
         $context = stream_context_create(array(
             'http' => array(
                 'method'  => 'POST',
                 'header'  => 'Host: ' . $address . "\r\n" .
                              'User-Agent: Hoa' . "\r\n" .
                              'Accept: */*' . "\r\n" .
-                             'Content-Type: text/plain' . "\r\n" .
-                             'Content-Length: ' . strlen($input) ."\r\n",
+                             'Content-type: application/x-www-form-urlencoded' . "\r\n" .
+                             'Content-Type: text/plain' . "\r\n",
                 'content' => $input
             )
         ));
@@ -117,6 +128,7 @@ class Paste extends \Hoa\Console\Dispatcher\Kit {
              'Options :', "\n",
              $this->makeUsageOptionsList(array(
                  'a'    => 'Address to the paste server.',
+                 't'    => 'Title for the paste',
                  'help' => 'This help.'
              )), "\n";
 
