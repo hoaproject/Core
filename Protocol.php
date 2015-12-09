@@ -554,7 +554,7 @@ class Library extends Protocol
 
             if (false !== $pos = strpos($queue, '/')) {
                 $head  = substr($head, 0, $pos);
-                $queue = DS . substr($queue, $pos + 1);
+                $queue = DIRECTORY_SEPARATOR . substr($queue, $pos + 1);
             } else {
                 $queue = null;
             }
@@ -573,7 +573,7 @@ class Library extends Protocol
         $out = [];
 
         foreach (explode(RS, $this->_reach) as $part) {
-            $pos   = strrpos(rtrim($part, DS), DS) + 1;
+            $pos   = strrpos(rtrim($part, DIRECTORY_SEPARATOR), DIRECTORY_SEPARATOR) + 1;
             $head  = substr($part, 0, $pos);
             $tail  = substr($part, $pos);
             $out[] = $head . strtolower($tail);

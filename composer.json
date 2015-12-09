@@ -22,8 +22,11 @@
         "source": "http://git.hoa-project.net/"
     },
     "require": {
-        "php"    : ">=5.4.0",
-        "ext-spl": "*"
+        "php"            : ">=5.4.0",
+        "ext-spl"        : "*",
+        "hoa/consistency": "~0.0",
+        "hoa/event"      : "~0.0",
+        "hoa/exception"  : "~0.0"
     },
     "require-dev": {
         "hoa/test": "~1.0"

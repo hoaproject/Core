@@ -52,21 +52,6 @@ and
     exit('Hoa needs at least PHP5.4 to work; you have ' . phpversion() . '.');
 
 /**
- * \Hoa\Core\Consistency
- */
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'Consistency.php';
-
-/**
- * \Hoa\Core\Event, (hard-preloaded in Hoa\Core\Consistency).
- */
-//require_once __DIR__ . DIRECTORY_SEPARATOR . 'Event.php';
-
-/**
- * \Hoa\Core\Exception, (hard-preloaded in Hoa\Core\Consistency).
- */
-//require_once __DIR__ . DIRECTORY_SEPARATOR . 'Exception.php';
-
-/**
  * \Hoa\Core\Parameter
  */
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'Parameter.php';
@@ -77,9 +62,9 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'Parameter.php';
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'Protocol.php';
 
 /**
- * \Hoa\Core\Data, (hard-preloaded in Hoa\Core\Consistency).
+ * \Hoa\Core\Data.
  */
-//require_once __DIR__ . DIRECTORY_SEPARATOR . 'Data.php';
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'Data.php';
 
 /**
  * Class \Hoa\Core.
@@ -91,13 +76,6 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'Protocol.php';
  */
 class Core implements Parameter\Parameterizable
 {
-    /**
-     * Stack of all registered shutdown function.
-     *
-     * @var array
-     */
-    private static $_rsdf     = [];
-
     /**
      * Tree of components, starts by the root.
      *
@@ -128,36 +106,6 @@ class Core implements Parameter\Parameterizable
      */
     private function __construct()
     {
-        static::_define('SUCCEED',        true);
-        static::_define('FAILED',         false);
-        static::_define('…',              '__hoa_core_fill');
-        static::_define('DS',             DIRECTORY_SEPARATOR);
-        static::_define('PS',             PATH_SEPARATOR);
-        static::_define('ROOT_SEPARATOR', ';');
-        static::_define('RS',             ROOT_SEPARATOR);
-        static::_define('CRLF',           "\r\n");
-        static::_define('OS_WIN',         defined('PHP_WINDOWS_VERSION_PLATFORM'));
-        static::_define('S_64_BITS',      PHP_INT_SIZE == 8);
-        static::_define('S_32_BITS',      !S_64_BITS);
-        static::_define('PHP_INT_MIN',    ~PHP_INT_MAX);
-        static::_define('PHP_FLOAT_MIN',  (float) PHP_INT_MIN);
-        static::_define('PHP_FLOAT_MAX',  (float) PHP_INT_MAX);
-        static::_define('π',              M_PI);
-        static::_define('void',           (unset) null);
-        static::_define('_public',        1);
-        static::_define('_protected',     2);
-        static::_define('_private',       4);
-        static::_define('_static',        8);
-        static::_define('_abstract',      16);
-        static::_define('_pure',          32);
-        static::_define('_final',         64);
-        static::_define('_dynamic',       ~_static);
-        static::_define('_concrete',      ~_abstract);
-        static::_define('_overridable',   ~_final);
-        static::_define('WITH_COMPOSER',  class_exists('Composer\Autoload\ClassLoader', false) ||
-                                          ('cli' === PHP_SAPI &&
-                                          file_exists(__DIR__ . DS . '..' . DS . '..' . DS . 'autoload.php')));
-
         if (false !== $wl = ini_get('suhosin.executor.include.whitelist')) {
             if (false === in_array('hoa', explode(',', $wl))) {
                 throw new Exception(
@@ -223,32 +171,32 @@ class Core implements Parameter\Parameterizable
             [
                 'root.hoa'         => '(:root:)',
                 'root.application' => '(:cwd:h:)',
-                'root.data'        => '(:%root.application:h:)' . DS . 'Data' . DS,
+                'root.data'        => '(:%root.application:h:)' . DIRECTORY_SEPARATOR . 'Data' . DIRECTORY_SEPARATOR,
 
-                'protocol.Application'            => '(:%root.application:)' . DS,
-                'protocol.Application/Public'     => 'Public' . DS,
+                'protocol.Application'            => '(:%root.application:)' . DIRECTORY_SEPARATOR,
+                'protocol.Application/Public'     => 'Public' . DIRECTORY_SEPARATOR,
                 'protocol.Data'                   => '(:%root.data:)',
-                'protocol.Data/Etc'               => 'Etc' . DS,
-                'protocol.Data/Etc/Configuration' => 'Configuration' . DS,
-                'protocol.Data/Etc/Locale'        => 'Locale' . DS,
-                'protocol.Data/Library'           => 'Library' . DS . 'Hoathis' . DS . RS .
-                                                     'Library' . DS . 'Hoa' . DS,
-                'protocol.Data/Lost+found'        => 'Lost+found' . DS,
-                'protocol.Data/Temporary'         => 'Temporary' . DS,
-                'protocol.Data/Variable'          => 'Variable' . DS,
-                'protocol.Data/Variable/Cache'    => 'Cache' . DS,
-                'protocol.Data/Variable/Database' => 'Database' . DS,
-                'protocol.Data/Variable/Log'      => 'Log' . DS,
-                'protocol.Data/Variable/Private'  => 'Private' . DS,
-                'protocol.Data/Variable/Run'      => 'Run' . DS,
-                'protocol.Data/Variable/Test'     => 'Test' . DS,
-                'protocol.Library'                => '(:%protocol.Data:)Library' . DS . 'Hoathis' . DS . RS .
-                                                     '(:%protocol.Data:)Library' . DS . 'Hoa' . DS . RS .
-                                                     '(:%root.hoa:)' . DS . 'Hoathis' . DS . RS .
-                                                     '(:%root.hoa:)' . DS . 'Hoa' . DS,
+                'protocol.Data/Etc'               => 'Etc' . DIRECTORY_SEPARATOR,
+                'protocol.Data/Etc/Configuration' => 'Configuration' . DIRECTORY_SEPARATOR,
+                'protocol.Data/Etc/Locale'        => 'Locale' . DIRECTORY_SEPARATOR,
+                'protocol.Data/Library'           => 'Library' . DIRECTORY_SEPARATOR . 'Hoathis' . DIRECTORY_SEPARATOR . ';' .
+                                                     'Library' . DIRECTORY_SEPARATOR . 'Hoa' . DIRECTORY_SEPARATOR,
+                'protocol.Data/Lost+found'        => 'Lost+found' . DIRECTORY_SEPARATOR,
+                'protocol.Data/Temporary'         => 'Temporary' . DIRECTORY_SEPARATOR,
+                'protocol.Data/Variable'          => 'Variable' . DIRECTORY_SEPARATOR,
+                'protocol.Data/Variable/Cache'    => 'Cache' . DIRECTORY_SEPARATOR,
+                'protocol.Data/Variable/Database' => 'Database' . DIRECTORY_SEPARATOR,
+                'protocol.Data/Variable/Log'      => 'Log' . DIRECTORY_SEPARATOR,
+                'protocol.Data/Variable/Private'  => 'Private' . DIRECTORY_SEPARATOR,
+                'protocol.Data/Variable/Run'      => 'Run' . DIRECTORY_SEPARATOR,
+                'protocol.Data/Variable/Test'     => 'Test' . DIRECTORY_SEPARATOR,
+                'protocol.Library'                => '(:%protocol.Data:)Library' . DIRECTORY_SEPARATOR . 'Hoathis' . DIRECTORY_SEPARATOR . ';' .
+                                                     '(:%protocol.Data:)Library' . DIRECTORY_SEPARATOR . 'Hoa' . DIRECTORY_SEPARATOR . ';' .
+                                                     '(:%root.hoa:)' . DIRECTORY_SEPARATOR . 'Hoathis' . DIRECTORY_SEPARATOR . ';' .
+                                                     '(:%root.hoa:)' . DIRECTORY_SEPARATOR . 'Hoa' . DIRECTORY_SEPARATOR,
 
-                'namespace.prefix.*'           => '(:%protocol.Data:)Library' . DS . RS . '(:%root.hoa:)' . DS,
-                'namespace.prefix.Application' => '(:%root.application:h:)' . DS,
+                'namespace.prefix.*'           => '(:%protocol.Data:)Library' . DIRECTORY_SEPARATOR . ';' . '(:%root.hoa:)' . DIRECTORY_SEPARATOR,
+                'namespace.prefix.Application' => '(:%root.application:h:)' . DIRECTORY_SEPARATOR,
             ]
         );
 
@@ -328,25 +276,6 @@ class Core implements Parameter\Parameterizable
     }
 
     /**
-     * Check if a constant is already defined.
-     * If the constant is defined, this method returns false.
-     * Else this method declares the constant.
-     *
-     * @param   string  $name     The name of the constant.
-     * @param   string  $value    The value of the constant.
-     * @param   bool    $case     True set the case-insensitive.
-     * @return  bool
-     */
-    public static function _define($name, $value, $case = false)
-    {
-        if (!defined($name)) {
-            return define($name, $value, $case);
-        }
-
-        return false;
-    }
-
-    /**
      * Get protocol's root.
      *
      * @return  \Hoa\Core\Protocol\Root
@@ -358,104 +287,6 @@ class Core implements Parameter\Parameterizable
         }
 
         return static::$_root;
-    }
-
-    /**
-     * Enable exception handler: catch uncaught exception.
-     *
-     * @param   bool  $enable    Enable.
-     * @return  mixed
-     */
-    public static function enableExceptionHandler($enable = true)
-    {
-        if (false === $enable) {
-            return restore_exception_handler();
-        }
-
-        return set_exception_handler(function ($exception) {
-            return Exception\Idle::uncaught($exception);
-        });
-    }
-
-    /**
-     * Enable error handler: transform PHP error into \Hoa\Core\Exception\Error.
-     *
-     * @param   bool  $enable    Enable.
-     * @return  mixed
-     */
-    public static function enableErrorHandler($enable = true)
-    {
-        if (false === $enable) {
-            return restore_error_handler();
-        }
-
-        return set_error_handler(function ($no, $str, $file = null, $line = null, $ctx = null) {
-            return Exception\Idle::error($no, $str, $file, $line, $ctx);
-        });
-    }
-
-    /**
-     * Apply and save a register shutdown function.
-     * It may be analogous to a static __destruct, but it allows us to make more
-     * that a __destruct method.
-     *
-     * @param   string  $class     Class.
-     * @param   string  $method    Method.
-     * @return  bool
-     */
-    public static function registerShutdownFunction($class = '', $method = '')
-    {
-        if (!isset(static::$_rsdf[$class][$method])) {
-            static::$_rsdf[$class][$method] = true;
-
-            return register_shutdown_function([$class, $method]);
-        }
-
-        return false;
-    }
-
-    /**
-     * Get PHP executable.
-     *
-     * @return  string
-     */
-    public static function getPHPBinary()
-    {
-        if (defined('PHP_BINARY')) {
-            return PHP_BINARY;
-        }
-
-        if (isset($_SERVER['_'])) {
-            return $_SERVER['_'];
-        }
-
-        foreach (['', '.exe'] as $extension) {
-            if (file_exists($_ = PHP_BINDIR . DS . 'php' . $extension)) {
-                return realpath($_);
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Generate an Universal Unique Identifier (UUID).
-     *
-     * @return  string
-     */
-    public static function uuid()
-    {
-        return sprintf(
-            '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-            mt_rand(0, 0xffff),
-            mt_rand(0, 0xffff),
-            mt_rand(0, 0xffff),
-            mt_rand(0, 0x0fff) | 0x4000,
-            mt_rand(0, 0x3fff) | 0x8000,
-            mt_rand(0, 0xffff),
-            mt_rand(0, 0xffff),
-            mt_rand(0, 0xffff)
-        );
     }
 
     /**
@@ -479,34 +310,6 @@ namespace {
  * Alias.
  */
 class_alias('Hoa\Core\Core', 'Hoa\Core');
-
-/**
- * Alias of \Hoa\Core::_define().
- *
- * @param   string  $name     The name of the constant.
- * @param   string  $value    The value of the constant.
- * @param   bool    $case     True set the case-insentisitve.
- * @return  bool
- */
-if (!function_exists('_define')) {
-    function _define($name, $value, $case = false)
-    {
-        return Hoa\Core::_define($name, $value, $case);
-    }
-}
-
-/**
- * Alias of the \Hoa\Core\Event::getEvent() method.
- *
- * @param   string  $eventId    Event ID.
- * @return  \Hoa\Core\Event
- */
-if (!function_exists('event')) {
-    function event($eventId)
-    {
-        return Hoa\Core\Event\Event::getEvent($eventId);
-    }
-}
 
 /**
  * Then, initialize Hoa.

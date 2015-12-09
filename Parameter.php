@@ -36,6 +36,7 @@
 
 namespace Hoa\Core\Parameter;
 
+use Hoa\Consistency;
 use Hoa\Core;
 
 /**
@@ -206,12 +207,12 @@ class Parameter
             $this->_parameters = $parameters;
             $path              = $this->zFormat(
                 $parameters['protocol.Data/Etc/Configuration']
-            ) . '.Cache' . DS . 'HoaCoreCore.php';
+            ) . '.Cache' . DIRECTORY_SEPARATOR . 'HoaCoreCore.php';
         } else {
             $class = str_replace(
                 '\\',
                 '',
-                Core\Consistency::getEntityShortestName($this->_owner)
+                Consistency::getEntityShortestName($this->_owner)
             );
             $path = 'hoa://Data/Etc/Configuration/.Cache/' . $class . '.php';
         }
