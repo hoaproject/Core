@@ -37,21 +37,6 @@
 namespace Hoa\Core {
 
 /**
- * Check if Hoa was well-included.
- */
-!(
-    !defined('HOA') and define('HOA', true)
-)
-and
-    exit('Hoa main file (Core.php) must be included once.');
-
-(
-    !defined('PHP_VERSION_ID') or PHP_VERSION_ID < 50400
-)
-and
-    exit('Hoa needs at least PHP5.4 to work; you have ' . phpversion() . '.');
-
-/**
  * \Hoa\Core\Parameter
  */
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'Parameter.php';
