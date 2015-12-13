@@ -217,7 +217,7 @@ class Parameter
             $path = 'hoa://Data/Etc/Configuration/.Cache/' . $class . '.php';
         }
 
-        if (file_exists($path)) {
+        if (false && file_exists($path)) {
             $handle = require $path;
 
             if (!is_array($handle)) {
