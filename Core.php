@@ -42,11 +42,6 @@ namespace Hoa\Core {
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'Parameter.php';
 
 /**
- * \Hoa\Core\Data.
- */
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'Data.php';
-
-/**
  * Class \Hoa\Core.
  *
  * \Hoa\Core is the base of all libraries.
