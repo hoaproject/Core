@@ -42,11 +42,6 @@ namespace Hoa\Core {
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'Parameter.php';
 
 /**
- * \Hoa\Core\Protocol
- */
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'Protocol.php';
-
-/**
  * \Hoa\Core\Data.
  */
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'Data.php';
@@ -142,54 +137,6 @@ class Core implements Parameter\Parameterizable
      */
     public function initialize(Array $parameters = [])
     {
-        $root = dirname(dirname(__DIR__));
-        $cwd  =
-            'cli' === PHP_SAPI
-                ? dirname(realpath($_SERVER['argv'][0]))
-                : getcwd();
-        $this->_parameters = new Parameter\Parameter(
-            $this,
-            [
-                'root' => $root,
-                'cwd'  => $cwd
-            ],
-            [
-                'root.hoa'         => '(:root:)',
-                'root.application' => '(:cwd:h:)',
-                'root.data'        => '(:%root.application:h:)' . DIRECTORY_SEPARATOR . 'Data' . DIRECTORY_SEPARATOR,
-
-                'protocol.Application'            => '(:%root.application:)' . DIRECTORY_SEPARATOR,
-                'protocol.Application/Public'     => 'Public' . DIRECTORY_SEPARATOR,
-                'protocol.Data'                   => '(:%root.data:)',
-                'protocol.Data/Etc'               => 'Etc' . DIRECTORY_SEPARATOR,
-                'protocol.Data/Etc/Configuration' => 'Configuration' . DIRECTORY_SEPARATOR,
-                'protocol.Data/Etc/Locale'        => 'Locale' . DIRECTORY_SEPARATOR,
-                'protocol.Data/Library'           => 'Library' . DIRECTORY_SEPARATOR . 'Hoathis' . DIRECTORY_SEPARATOR . ';' .
-                                                     'Library' . DIRECTORY_SEPARATOR . 'Hoa' . DIRECTORY_SEPARATOR,
-                'protocol.Data/Lost+found'        => 'Lost+found' . DIRECTORY_SEPARATOR,
-                'protocol.Data/Temporary'         => 'Temporary' . DIRECTORY_SEPARATOR,
-                'protocol.Data/Variable'          => 'Variable' . DIRECTORY_SEPARATOR,
-                'protocol.Data/Variable/Cache'    => 'Cache' . DIRECTORY_SEPARATOR,
-                'protocol.Data/Variable/Database' => 'Database' . DIRECTORY_SEPARATOR,
-                'protocol.Data/Variable/Log'      => 'Log' . DIRECTORY_SEPARATOR,
-                'protocol.Data/Variable/Private'  => 'Private' . DIRECTORY_SEPARATOR,
-                'protocol.Data/Variable/Run'      => 'Run' . DIRECTORY_SEPARATOR,
-                'protocol.Data/Variable/Test'     => 'Test' . DIRECTORY_SEPARATOR,
-                'protocol.Library'                => '(:%protocol.Data:)Library' . DIRECTORY_SEPARATOR . 'Hoathis' . DIRECTORY_SEPARATOR . ';' .
-                                                     '(:%protocol.Data:)Library' . DIRECTORY_SEPARATOR . 'Hoa' . DIRECTORY_SEPARATOR . ';' .
-                                                     '(:%root.hoa:)' . DIRECTORY_SEPARATOR . 'Hoathis' . DIRECTORY_SEPARATOR . ';' .
-                                                     '(:%root.hoa:)' . DIRECTORY_SEPARATOR . 'Hoa' . DIRECTORY_SEPARATOR,
-
-                'namespace.prefix.*'           => '(:%protocol.Data:)Library' . DIRECTORY_SEPARATOR . ';' . '(:%root.hoa:)' . DIRECTORY_SEPARATOR,
-                'namespace.prefix.Application' => '(:%root.application:h:)' . DIRECTORY_SEPARATOR,
-            ]
-        );
-
-        $this->_parameters->setKeyword('root', $root);
-        $this->_parameters->setKeyword('cwd',  $cwd);
-        $this->_parameters->setParameters($parameters);
-        $this->setProtocol();
-
         return $this;
     }
 
@@ -201,77 +148,6 @@ class Core implements Parameter\Parameterizable
     public function getParameters()
     {
         return $this->_parameters;
-    }
-
-    /**
-     * Set protocol according to the current parameter.
-     *
-     * @param   string  $path     Path (e.g. hoa://Data/Temporary).
-     * @param   string  $reach    Reach value.
-     * @return  void
-     */
-    public function setProtocol($path = null, $reach = null)
-    {
-        $root = static::getProtocol();
-
-        if (null === $path && null === $reach) {
-            if (!isset($root['Library'])) {
-                static::$_root = null;
-                $root          = static::getProtocol();
-            }
-
-            $protocol = $this->getParameters()->unlinearizeBranche('protocol');
-
-            foreach ($protocol as $components => $reach) {
-                $parts  = explode('/', trim($components, '/'));
-                $last   = array_pop($parts);
-                $handle = $root;
-
-                foreach ($parts as $part) {
-                    $handle = $handle[$part];
-                }
-
-                if ('Library' === $last) {
-                    $handle[] = new Protocol\Library($last, $reach);
-                } else {
-                    $handle[] = new Protocol\Generic($last, $reach);
-                }
-            }
-
-            return;
-        }
-
-        if ('hoa://' === substr($path, 0, 6)) {
-            $path = substr($path, 6);
-        }
-
-        $path   = trim($path, '/');
-        $parts  = explode('/', $path);
-        $handle = $root;
-
-        foreach ($parts as $part) {
-            $handle = $handle[$part];
-        }
-
-        $handle->setReach($reach);
-        $root->clearCache();
-        $this->getParameters()->setParameter('protocol.' . $path, $reach);
-
-        return;
-    }
-
-    /**
-     * Get protocol's root.
-     *
-     * @return  \Hoa\Core\Protocol\Root
-     */
-    public static function getProtocol()
-    {
-        if (null === static::$_root) {
-            static::$_root = new Protocol\Root();
-        }
-
-        return static::$_root;
     }
 
     /**
