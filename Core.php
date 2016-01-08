@@ -37,11 +37,6 @@
 namespace Hoa\Core {
 
 /**
- * \Hoa\Core\Parameter
- */
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'Parameter.php';
-
-/**
  * Class \Hoa\Core.
  *
  * \Hoa\Core is the base of all libraries.
@@ -49,7 +44,7 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'Parameter.php';
  * @copyright  Copyright © 2007-2015 Hoa community
  * @license    New BSD License
  */
-class Core implements Parameter\Parameterizable
+class Core
 {
     /**
      * Tree of components, starts by the root.
@@ -133,16 +128,6 @@ class Core implements Parameter\Parameterizable
     public function initialize(Array $parameters = [])
     {
         return $this;
-    }
-
-    /**
-     * Get parameters.
-     *
-     * @return  \Hoa\Core\Parameter
-     */
-    public function getParameters()
-    {
-        return $this->_parameters;
     }
 
     /**
