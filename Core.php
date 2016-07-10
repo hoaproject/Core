@@ -143,7 +143,7 @@ class Core implements Parameter\Parameterizable
         static::_define('PHP_FLOAT_MIN',  (float) PHP_INT_MIN);
         static::_define('PHP_FLOAT_MAX',  (float) PHP_INT_MAX);
         static::_define('π',              M_PI);
-        static::_define('void',           (unset) null);
+        static::_define('nil',            (unset) null);
         static::_define('_public',        1);
         static::_define('_protected',     2);
         static::_define('_private',       4);
