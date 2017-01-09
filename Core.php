@@ -8,7 +8,7 @@
  *
  * New BSD License
  *
- * Copyright © 2007-2015, Hoa community. All rights reserved.
+ * Copyright © 2007-2017, Hoa community. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -86,7 +86,7 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'Protocol.php';
  *
  * \Hoa\Core is the base of all libraries.
  *
- * @copyright  Copyright © 2007-2015 Hoa community
+ * @copyright  Copyright © 2007-2017 Hoa community
  * @license    New BSD License
  */
 class Core implements Parameter\Parameterizable
@@ -124,7 +124,6 @@ class Core implements Parameter\Parameterizable
     /**
      * Singleton.
      *
-     * @return  void
      */
     private function __construct()
     {
@@ -207,7 +206,7 @@ class Core implements Parameter\Parameterizable
      * @param   array   $parameters    Parameters of \Hoa\Core.
      * @return  \Hoa\Core
      */
-    public function initialize(Array $parameters = [])
+    public function initialize(array $parameters = [])
     {
         $root = dirname(dirname(__DIR__));
         $cwd  =

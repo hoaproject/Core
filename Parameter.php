@@ -8,7 +8,7 @@
  *
  * New BSD License
  *
- * Copyright © 2007-2015, Hoa community. All rights reserved.
+ * Copyright © 2007-2017, Hoa community. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -43,7 +43,7 @@ use Hoa\Core;
  *
  * Interface for parameterizable class.
  *
- * @copyright  Copyright © 2007-2015 Hoa community
+ * @copyright  Copyright © 2007-2017 Hoa community
  * @license    New BSD License
  */
 interface Parameterizable
@@ -61,7 +61,7 @@ interface Parameterizable
  *
  * Provide a parameter support.
  *
- * @copyright  Copyright © 2007-2015 Hoa community
+ * @copyright  Copyright © 2007-2017 Hoa community
  * @license    New BSD License
  */
 class Parameter
@@ -109,13 +109,12 @@ class Parameter
      * @param   mixed  $owner         Owner name or instance.
      * @param   array  $keywords      Keywords.
      * @param   array  $parameters    Parameters.
-     * @return  void
      * @throws  \Hoa\Core\Parameter
      */
     public function __construct(
         $owner,
-        Array $keywords   = [],
-        Array $parameters = []
+        array $keywords   = [],
+        array $parameters = []
     ) {
         if (is_object($owner)) {
             if (!($owner instanceof Parameterizable)) {
@@ -199,7 +198,7 @@ class Parameter
      * @return  void
      * @throws  \Hoa\Core\Exception
      */
-    private function setDefault(Array $parameters)
+    private function setDefault(array $parameters)
     {
         if ($this->_owner == 'Hoa\Core\Core') {
             $class             = 'HoaCoreCore';
@@ -259,7 +258,7 @@ class Parameter
      * @param   array   $parameter    Parameters.
      * @return  void
      */
-    public function setParameters(Array $parameters)
+    public function setParameters(array $parameters)
     {
         $this->resetCache();
 

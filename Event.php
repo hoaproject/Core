@@ -8,7 +8,7 @@
  *
  * New BSD License
  *
- * Copyright © 2007-2015, Hoa community. All rights reserved.
+ * Copyright © 2007-2017, Hoa community. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -43,7 +43,7 @@ use Hoa\Core;
  *
  * Each object which is observable must implement this interface.
  *
- * @copyright  Copyright © 2007-2015 Hoa community
+ * @copyright  Copyright © 2007-2017 Hoa community
  * @license    New BSD License
  */
 interface Source
@@ -55,7 +55,7 @@ interface Source
  *
  * This class is the object which is transmit through event channels.
  *
- * @copyright  Copyright © 2007-2015 Hoa community
+ * @copyright  Copyright © 2007-2017 Hoa community
  * @license    New BSD License
  */
 class Bucket
@@ -80,7 +80,6 @@ class Bucket
      * Set data.
      *
      * @param   mixed   $data    Data.
-     * @return  void
      */
     public function __construct($data = null)
     {
@@ -158,7 +157,7 @@ class Bucket
  * receive a bucket) and useful to largely spread data through components
  * without any known connection between them.
  *
- * @copyright  Copyright © 2007-2015 Hoa community
+ * @copyright  Copyright © 2007-2017 Hoa community
  * @license    New BSD License
  */
 class Event
@@ -365,7 +364,7 @@ class Event
  *
  * Each object which is listenable must implement this interface.
  *
- * @copyright  Copyright © 2007-2015 Hoa community
+ * @copyright  Copyright © 2007-2017 Hoa community
  * @license    New BSD License
  */
 interface Listenable extends Source
@@ -387,7 +386,7 @@ interface Listenable extends Source
  * A contrario of events, listeners are synchronous, identified at use and
  * useful for close interactions between one or some components.
  *
- * @copyright  Copyright © 2007-2015 Hoa community
+ * @copyright  Copyright © 2007-2017 Hoa community
  * @license    New BSD License
  */
 class Listener
@@ -415,7 +414,7 @@ class Listener
      * @param   array                       $ids       Accepted ID.
      * @return  void
      */
-    public function __construct(Listenable $source, Array $ids)
+    public function __construct(Listenable $source, array $ids)
     {
         $this->_source = $source;
         $this->addIds($ids);
@@ -429,7 +428,7 @@ class Listener
      * @param   array  $ids    Accepted ID.
      * @return  void
      */
-    public function addIds(Array $ids)
+    public function addIds(array $ids)
     {
         foreach ($ids as $id) {
             $this->_listen[$id] = [];

@@ -8,7 +8,7 @@
  *
  * New BSD License
  *
- * Copyright © 2007-2015, Hoa community. All rights reserved.
+ * Copyright © 2007-2017, Hoa community. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -45,7 +45,7 @@ use Hoa\Core;
  * difference between \Hoa\Core\Exception\Idle and its directly child
  * \Hoa\Core\Exception is that the later fires event after beeing constructed.
  *
- * @copyright  Copyright © 2007-2015 Hoa community
+ * @copyright  Copyright © 2007-2017 Hoa community
  * @license    New BSD License
  */
 class Idle extends \Exception
@@ -97,7 +97,6 @@ class Idle extends \Exception
      * @param   int         $code         Code (the ID).
      * @param   array       $arguments    Arguments to format message.
      * @param   \Exception  $previous     Previous exception in chaining.
-     * @return  void
      */
     public function __construct(
         $message,
@@ -327,7 +326,7 @@ class Idle extends \Exception
  *
  * Each exception must extend \Hoa\Core\Exception.
  *
- * @copyright  Copyright © 2007-2015 Hoa community
+ * @copyright  Copyright © 2007-2017 Hoa community
  * @license    New BSD License
  */
 class Exception extends Idle implements Core\Event\Source
@@ -383,7 +382,7 @@ class Exception extends Idle implements Core\Event\Source
  *
  * This exception is the equivalent representation of PHP errors.
  *
- * @copyright  Copyright © 2007-2015 Hoa community
+ * @copyright  Copyright © 2007-2017 Hoa community
  * @license    New BSD License
  */
 class Error extends Exception
@@ -402,7 +401,7 @@ class Error extends Exception
         $code,
         $file,
         $line,
-        Array $trace = []
+        array $trace = []
     ) {
         $this->file   = $file;
         $this->line   = $line;
@@ -419,12 +418,10 @@ class Error extends Exception
  *
  * This is an exception that contains a group of exceptions.
  *
- * @copyright  Copyright © 2007-2015 Hoa community
+ * @copyright  Copyright © 2007-2017 Hoa community
  * @license    New BSD License
  */
-class          Group
-    extends    Exception
-    implements \ArrayAccess, \IteratorAggregate, \Countable
+class Group extends Exception implements \ArrayAccess, \IteratorAggregate, \Countable
 {
     /**
      * All exceptions (stored in a stack for transactions).
