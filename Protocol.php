@@ -8,7 +8,7 @@
  *
  * New BSD License
  *
- * Copyright © 2007-2015, Hoa community. All rights reserved.
+ * Copyright © 2007-2017, Hoa community. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -94,7 +94,6 @@ abstract class Protocol implements \ArrayAccess, \IteratorAggregate
      *
      * @param   string  $name     Component's name.
      * @param   string  $reach    Path for the reach() method.
-     * @return  void
      */
     public function __construct($name = null, $reach = null)
     {
@@ -337,7 +336,7 @@ abstract class Protocol implements \ArrayAccess, \IteratorAggregate
      * @param   array   &$accumulator    Combination of all possibles paths.
      * @return  void
      */
-    protected function _resolveChoice($reach, Array &$accumulator)
+    protected function _resolveChoice($reach, array &$accumulator)
     {
         if (empty($accumulator)) {
             $accumulator = explode(RS, $reach);
@@ -501,7 +500,7 @@ class_alias('Hoa\Core\Protocol\Protocol', 'Hoa\Core\Protocol');
  *
  * hoa://'s protocol's generic component.
  *
- * @copyright  Copyright © 2007-2015 Hoa community
+ * @copyright  Copyright © 2007-2017 Hoa community
  * @license    New BSD License
  */
 class Generic extends Protocol
@@ -513,7 +512,7 @@ class Generic extends Protocol
  *
  * hoa://'s protocol's root.
  *
- * @copyright  Copyright © 2007-2015 Hoa community
+ * @copyright  Copyright © 2007-2017 Hoa community
  * @license    New BSD License
  */
 class Root extends Protocol
@@ -531,7 +530,7 @@ class Root extends Protocol
  *
  * Library protocol's component.
  *
- * @copyright  Copyright © 2007-2015 Hoa community
+ * @copyright  Copyright © 2007-2017 Hoa community
  * @license    New BSD License
  */
 class Library extends Protocol
@@ -590,7 +589,7 @@ class Library extends Protocol
  *
  * Wrapper for hoa://'s protocol.
  *
- * @copyright  Copyright © 2007-2015 Hoa community
+ * @copyright  Copyright © 2007-2017 Hoa community
  * @license    New BSD License
  */
 class Wrapper

@@ -8,7 +8,7 @@
  *
  * New BSD License
  *
- * Copyright © 2007-2015, Hoa community. All rights reserved.
+ * Copyright © 2007-2017, Hoa community. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -51,7 +51,7 @@ define('PATH_DATA', __DIR__ . DIRECTORY_SEPARATOR . 'Data.php');
  *
  * This class manages all classes, importations etc.
  *
- * @copyright  Copyright © 2007-2015 Hoa community
+ * @copyright  Copyright © 2007-2017 Hoa community
  * @license    New BSD License
  */
 class Consistency
@@ -119,7 +119,6 @@ class Consistency
      * Singleton to manage a library family.
      *
      * @param   string  $from    Library family's name.
-     * @return  void
      */
     private function __construct($from)
     {
@@ -373,7 +372,7 @@ class Consistency
      * @return  object
      * @throws  \Hoa\Core\Exception
      */
-    public static function dnew($classname, Array $arguments = [])
+    public static function dnew($classname, array $arguments = [])
     {
         $classname = ltrim($classname, '\\');
 
@@ -646,7 +645,7 @@ class Consistency
  * closure, they all have the same behaviour. This callable is an extension of
  * native PHP callable (aka callback) to integrate Hoa's structures.
  *
- * @copyright  Copyright © 2007-2015 Hoa community
+ * @copyright  Copyright © 2007-2017 Hoa community
  * @license    New BSD License
  */
 class Xcallable
@@ -768,7 +767,7 @@ class Xcallable
      * @param   array  $arguments    Arguments.
      * @return  mixed
      */
-    public function distributeArguments(Array $arguments)
+    public function distributeArguments(array $arguments)
     {
         return call_user_func_array([$this, '__invoke'], $arguments);
     }
@@ -780,7 +779,7 @@ class Xcallable
      *                                 object if not precised).
      * @return  mixed
      */
-    public function getValidCallback(Array &$arguments = [])
+    public function getValidCallback(array &$arguments = [])
     {
         $callback = $this->_callback;
         $head     = null;
@@ -979,7 +978,7 @@ if (!function_exists('from')) {
  * @return  object
  */
 if (!function_exists('dnew')) {
-    function dnew($classname, Array $arguments = [])
+    function dnew($classname, array $arguments = [])
     {
         return Hoa\Core\Consistency::dnew($classname, $arguments);
     }
