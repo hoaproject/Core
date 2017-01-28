@@ -401,7 +401,13 @@ class Consistency
             }
         }
 
-        $class = new \ReflectionClass($classname);
+        try {
+
+            $class = new \ReflectionClass($classname);
+        } catch (\ReflectionException $ex) {
+            
+            throw new \Hoa\Core\Exception\Exception($ex->getMessage(), $ex->getCode(), array(), $ex);
+        }
 
         if (empty($arguments) || false === $class->hasMethod('__construct')) {
             return $class->newInstance();
